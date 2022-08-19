@@ -1,0 +1,38 @@
+const mongoose = require("mongoose");
+
+const LectureSchema = mongoose.Schema({
+  title: {
+    type: String,
+    require: [true, "Title is required"],
+  },
+  date: {
+    type: String,
+    require: [true, "Date is required"],
+  },
+  time: {
+    type: String,
+    require: [true, "Time is required"],
+  },
+  hall: {
+    type: String,
+    require: [true, "Hall is required"],
+  },
+  dep: {
+    type: String,
+    require: [true, "Department is required"],
+  },
+  year: {
+    type: String,
+    require: [true, "Year is required"],
+  },
+  status: {
+    type: String,
+    enum: {
+      values: ["listed", "canceled", "unknown"],
+      message: "{VALUE} is not supported",
+    },
+    default: "listed",
+  },
+});
+
+module.exports = mongoose.model("Lecture", LectureSchema);
