@@ -70,10 +70,10 @@ const getAllLectures = async (req, res) => {
     const sortList = sort.split(",").join(" ");
     result = result.sort(sortList);
   } else {
-    result = result.sort("createdAt");
+    result = result.sort("-date");
   }
   if (limit) {
-    const limit = Number(req.query.limit);
+    const limit = Number(limit);
     result = result.limit(limit);
   }
   const lectures = await result;
@@ -115,6 +115,28 @@ const updateLecture = async (req, res) => {
   });
   res.status(StatusCodes.OK).json({ lecture });
 };
+const getDays = async (req, res) => {
+  const { year, dep, limit } = req.query;
+  // let queryObject = {};
+  // if (dep) {
+  //   queryObject.dep = dep;
+  // }
+  // if (year) {
+  //   queryObject.year = year;
+  // }
+  // let results = Lecture.aggregate([
+  //   { $match: { year: year, dep: dep } },
+  //   { $project: { date: 1 } },
+  //   { $sort: { date: -1 } },
+  // ]);
+  let results = Lecture.find({ year: year, dep: dep }).distinct("date").sort();
+  // results = results.sort("-date");
+  // const days = results;
+  // results = results.distinct("-date");
+  const days = await results;
+  console.log(days);
+  res.status(StatusCodes.OK).json({ days });
+};
 module.exports = {
   createLecture,
   getAllLectures,
@@ -122,4 +144,5 @@ module.exports = {
   getOneLecture,
   deleteOneLecture,
   updateLecture,
+  getDays,
 };
