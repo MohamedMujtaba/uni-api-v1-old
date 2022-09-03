@@ -42,6 +42,12 @@ const createLecture = async (req, res) => {
 const getAllLectures = async (req, res) => {
   const { title, date, time, hall, dep, year, status, sort, limit } = req.query;
   let queryObject = {};
+  if (dep) {
+    queryObject.dep = dep;
+  }
+  if (year) {
+    queryObject.year = year;
+  }
   if (title) {
     queryObject.title = title;
   }
@@ -54,12 +60,7 @@ const getAllLectures = async (req, res) => {
   if (hall) {
     queryObject.hall = hall;
   }
-  if (dep) {
-    queryObject.dep = dep;
-  }
-  if (year) {
-    queryObject.year = year;
-  }
+
   if (status) {
     queryObject.status = status;
   }
@@ -70,7 +71,7 @@ const getAllLectures = async (req, res) => {
     const sortList = sort.split(",").join(" ");
     result = result.sort(sortList);
   } else {
-    result = result.sort("-date");
+    result = result.sort("-date -dep");
   }
   if (limit) {
     const limit = Number(limit);
