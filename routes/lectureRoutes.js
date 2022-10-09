@@ -9,9 +9,10 @@ const {
   getOneLecture,
   updateLecture,
   getDays,
+  getNumberOfLectures,
 } = require("../controllers/lectureController");
 
-router.route("/days").get(getDays);
+router.route("/get-number-of-lectures").get(getNumberOfLectures);
 router.route("/").post(createLecture).get(getAllLectures).delete(deleteAll);
 router
   .route("/:id")

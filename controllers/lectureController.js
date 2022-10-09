@@ -42,12 +42,6 @@ const createLecture = async (req, res) => {
 const getAllLectures = async (req, res) => {
   const { title, date, time, hall, dep, year, status, sort, limit } = req.query;
   let queryObject = {};
-  if (dep) {
-    queryObject.dep = dep;
-  }
-  if (year) {
-    queryObject.year = year;
-  }
   if (title) {
     queryObject.title = title;
   }
@@ -60,7 +54,12 @@ const getAllLectures = async (req, res) => {
   if (hall) {
     queryObject.hall = hall;
   }
-
+  if (dep) {
+    queryObject.dep = dep;
+  }
+  if (year) {
+    queryObject.year = year;
+  }
   if (status) {
     queryObject.status = status;
   }
@@ -71,7 +70,7 @@ const getAllLectures = async (req, res) => {
     const sortList = sort.split(",").join(" ");
     result = result.sort(sortList);
   } else {
-    result = result.sort("-date -dep");
+    result = result.sort("-date");
   }
   if (limit) {
     const limit = Number(limit);
@@ -138,6 +137,19 @@ const getDays = async (req, res) => {
   console.log(days);
   res.status(StatusCodes.OK).json({ days });
 };
+const getNumberOfLectures = async (req, res) => {
+  const { dep, year } = req.query;
+  const lectures = await Lecture.aggregate([
+    { $match: { dep: dep, year: year } },
+    {
+      $group: {
+        _id: "$date",
+        count: { $sum: 1 }, // this means that the count will increment by 1
+      },
+    },
+  ]);
+  res.status(StatusCodes.OK).json({ lectures });
+};
 module.exports = {
   createLecture,
   getAllLectures,
@@ -146,4 +158,5 @@ module.exports = {
   deleteOneLecture,
   updateLecture,
   getDays,
+  getNumberOfLectures,
 };
