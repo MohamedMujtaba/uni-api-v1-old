@@ -25,6 +25,10 @@ const LectureSchema = mongoose.Schema({
     type: String,
     require: [true, "Year is required"],
   },
+  note: {
+    type: String,
+    default: "",
+  },
   status: {
     type: String,
     enum: {

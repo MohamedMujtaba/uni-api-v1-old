@@ -2,7 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const Lecture = require("../models/Lecture");
 
 const createLecture = async (req, res) => {
-  const { title, date, time, hall, dep, year, status } = req.body;
+  const { title, date, time, hall, dep, year, status, note } = req.body;
   const lectures = await Lecture.find({
     year,
     dep,
@@ -24,6 +24,7 @@ const createLecture = async (req, res) => {
         hall,
         dep,
         year,
+        note,
         status,
       });
       res.status(StatusCodes.CREATED).json({ lecture });
