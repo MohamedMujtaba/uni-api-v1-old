@@ -71,7 +71,7 @@ const getAllLectures = async (req, res) => {
     const sortList = sort.split(",").join(" ");
     result = result.sort(sortList);
   } else {
-    result = result.sort("-time");
+    result = result.sort("time");
   }
   if (limit) {
     const limit = Number(limit);
