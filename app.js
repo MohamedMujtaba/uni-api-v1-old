@@ -12,6 +12,7 @@ const cors = require("cors");
 
 // import routers
 const lectureRouter = require("./routes/lectureRoutes");
+const userRouter = require("./routes/userRoutes");
 
 // middleware
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use(helmet());
 
 // use routers
 app.use("/api/v1/lecture", lectureRouter);
+app.use("/api/v1/user", userRouter);
 
 // db
 const connectDB = require("./db/connect");
