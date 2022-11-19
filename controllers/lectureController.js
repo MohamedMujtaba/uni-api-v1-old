@@ -16,7 +16,7 @@ const createLecture = async (req, res) => {
   });
 
   if (lectures.length === 0) {
-    if (hallCheck.length === 0) {
+    if (hallCheck.length <= 3) {
       const lecture = await Lecture.create({
         title,
         date,
